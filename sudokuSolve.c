@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <pthread.h>
 
+
+//test
+//ayo
+//show me the money
+//hahaha ayo
+//827423984823****
+//&*(&$@(*#&#($(#&$^@$
+//1234
+//joe meme
 int main (int argc, char *argv[])
 {
 //temporary array until the read function is made;
