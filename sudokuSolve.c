@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+int sudoku[9][9];
 
-#define N 9
-
-void print(int arr[N][N])
+void print(int arr[9][9])
 {
-	for(int i = 0; i < N; i++)
+	for(int i = 0; i < 9; i++)
 		{
-			for (int j = 0; j < N; j++)
+			for (int j = 0; j < 9; j++)
 			{
 				printf("%d ", arr[i][j]);
 			}
@@ -19,8 +18,12 @@ void print(int arr[N][N])
 int main (int argc, char *argv[])
 {
 //temporary array until the read function is made;
+	
+	//read function below
+	//does not work for now
+	/*
 	FILE *fp;
-	fp = fopen("Lab3 puzzle.txt", "r");//opens puzzle in read mode
+	fp = fopen("sudoku", "r");//opens puzzle in read mode
 
 	if (fp == NULL)
 	{
@@ -40,6 +43,7 @@ int main (int argc, char *argv[])
 		}
 
 	}
+	*/
 	int sudokuArray[9][9]={
 	{5,3,4,6,7,8,9,1,2},
 	{6,7,2,1,9,5,3,4,8},
@@ -51,27 +55,40 @@ int main (int argc, char *argv[])
 	{2,8,7,4,1,9,6,3,5},
 	{3,4,5,2,8,6,1,7,9},
 	};
-	print(sudokuArray2);
+	//print(sudokuArray2);
+
 
 }
 
 int checkSudoku (int puzzle[9][9])
 {
+	pthread_t t1;
+	pthread_t t2;
+	pthread_t t3;
+	pthread_create(t1, NULL, &solveThreadSquare, NULL);
+	pthread_create(t2, NULL, &solveThreadY, NULL);
+	pthread_create(t3, NULL, &solveThreadX, NULL);
+	pthread_join(t1,NULL);
+	pthread_join(t2,NULL);
+	pthread_join(t3,NULL);
 	return 1;
 }
 
 //threads down below
 void *solveThreadY()
 {
-
+	int tempArray[9];
+	printf("I am the Y solver thread");
 }
 
 void *solveThreadX()
 {
-
+	int tempArray[9];
+	printf("I am the X solver thread");
 }
 
 void *solveThreadSquare()
 {
-
+	int tempArray[9];
+	printf("I am the Square solver thread");
 }
