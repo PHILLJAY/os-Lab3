@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <pthread.h>
 
+void print(int arr[N][N])
+{
+	for(int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				printf("%d ", arr[i][j]);
+			}
+			printf("\n");
+		}
+}
 
-//test
-//ayo
-//show me the money
-//hahaha ayo
-//827423984823****
-//&*(&$@(*#&#($(#&$^@$
-//1234
-//joe meme
 int main (int argc, char *argv[])
 {
 //temporary array until the read function is made;
