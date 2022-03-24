@@ -65,9 +65,9 @@ int checkSudoku (int puzzle[9][9])
 	pthread_t t1;
 	pthread_t t2;
 	pthread_t t3;
-	pthread_create(t1, NULL, &solveThreadSquare, NULL);
-	pthread_create(t2, NULL, &solveThreadY, NULL);
-	pthread_create(t3, NULL, &solveThreadX, NULL);
+	pthread_create(t1, NULL, solveThreadSquare, NULL);
+	pthread_create(t2, NULL, solveThreadY, NULL);
+	pthread_create(t3, NULL, solveThreadX, NULL);
 	pthread_join(t1,NULL);
 	pthread_join(t2,NULL);
 	pthread_join(t3,NULL);
