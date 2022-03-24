@@ -29,6 +29,10 @@ void *solveThreadX()
 }
 
 void *solveThreadSquare()
+{
+	int tempArray[9];
+	printf("I am the Square solver thread");
+}
 
 int main (int argc, char *argv[])
 {
@@ -90,7 +94,4 @@ int checkSudoku (int puzzle[9][9])
 }
 
 
-{
-	int tempArray[9];
-	printf("I am the Square solver thread");
-}
+
