@@ -16,24 +16,28 @@ void print(int arr[9][9])
 }
 
 //threads down below
-void *solveThreadY(int puzzle[9][9])
+void *checkThreadY(int puzzle[9][9])
 {
 	int tempArray[9];
-	printf("I am the Y solver thread");
+	printf("I am the Y checkr thread");
 }
 
-void *solveThreadX(int puzzle[9][9])
+void *checkThreadX(int puzzle[9][9])
 {
 	int tempArray[9];
-	printf("I am the X solver thread");
+	printf("I am the X checkr thread");
 }
 
-void *solveThreadSquare(int puzzle[9][9])
+void *checkThreadSquare(int puzzle[9][9])
 {
 	int tempArray[9];
-	printf("I am the Square solver thread");
+	printf("I am the Square checkr thread");
 }
 
+
+void solveSudoku(int puzzle[9][9]){
+	
+}
 int main (int argc, char *argv[])
 {
 //temporary array until the read function is made;
@@ -85,9 +89,9 @@ int checkSudoku (int puzzle[9][9])
 	pthread_t t1;
 	pthread_t t2;
 	pthread_t t3;
-	pthread_create(&t1, NULL, &solveThreadSquare, puzzle);
-	pthread_create(&t2, NULL, &solveThreadY, puzzle);
-	pthread_create(&t3, NULL, &solveThreadX, puzzle);
+	pthread_create(&t1, NULL, &checkThreadSquare, puzzle);
+	pthread_create(&t2, NULL, &checkThreadY, puzzle);
+	pthread_create(&t3, NULL, &checkThreadX, puzzle);
 	pthread_join(t1,NULL);
 	pthread_join(t2,NULL);
 	pthread_join(t3,NULL);
