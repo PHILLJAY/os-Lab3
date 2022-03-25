@@ -35,6 +35,7 @@ void *checkThreadY(int puzzle[9][9])
 				printf("Y solution correct");
 				return 0;
 			}
+		}
         }
 }
 
@@ -58,6 +59,7 @@ void *checkThreadX(int puzzle[9][9])
 				printf("X solution correct");
 				return 0;
 			}
+		}
         }
 }
 
