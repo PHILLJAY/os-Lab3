@@ -27,9 +27,9 @@ void *checkThreadY(int puzzle[9][9])
 			for (i=1;i<=n;i++) {
 				total = total + puzzle[i][j];
 				}
-		if (total!=45) //column must equal 45 as 1+2+3+4+5+6+7+8+9=45
-			printf("Current Y solution not correct");
-			exit(0);
+			if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
+				printf("Current Y solution not correct");
+				exit(0);
 			}
 			else{
 				printf("Y solution correct");
