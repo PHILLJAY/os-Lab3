@@ -61,8 +61,29 @@ void *checkThreadX(int puzzle[9][9])
 
 void *checkThreadSquare(int puzzle[9][9])
 {
-	int tempArray[9];
-	printf("I am the Square checkr thread");
+	printf("I am the Square checker thread");
+	
+	int puzzle[9][9], i, j, k, l, total1, total2, total3;
+	for (k=1;k<=3;k++) {
+        	l = (1+(k-1)*3);
+        	for (i=l;i<=k*3;i++) {
+		    	for(j=1;j<=3;j++) {
+		        	total1 = total1 + puzzle[i][j];
+		    		}
+		    	for (j=4;j<=6;j++) {
+		       	total2 = total2 + puzzle[i][j];
+		    		}
+		    	for (j=7;j<=9;j++) {
+		        	total3 = total3 + puzzle[i][j];
+		    		}
+        	}
+        	if (total1!=45||total2!=45||total3!=45) {
+            		printf("Current Square solution not correct");
+			exit(0);
+			}
+	}
+	printf("Squares solution correct");
+	return 0;
 }
 
 
