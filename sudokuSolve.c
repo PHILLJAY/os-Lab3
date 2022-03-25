@@ -195,9 +195,7 @@ int main(int argc, char const *argv[])
 	if(solve(sudokuArray2)){
 		print(sudokuArray2);
 	}
-
-
-
+	checkSudoku(sudokuArray2);
 }
 
 int checkSudoku (int puzzle[9][9])
