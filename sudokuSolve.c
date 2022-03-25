@@ -3,6 +3,53 @@
 #include <stdlib.h>
 int sudoku[9][9];
 
+
+int valid(int[][9], int, int, int);
+int solve(int[][9]);
+int find_empty_cell(int[][9], int *, int *);
+
+//find next empty cell
+int find_empty_cell(int puzzle[][9], int *row, int *column) {
+  for (int x = 0; x < 9; x++) {
+    for (int y = 0; y < 9; y++) {
+      if (!puzzle[x][y]) {
+        *row = x;
+        *column = y;
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+
+int valid(int puzzle[][9], int row, int column, int guess) {
+  int corner_x = row / 3 * 3;
+  int corner_y = column / 3 * 3;
+
+  for (int x = 0; x < 9; ++x) {
+    if (puzzle[row][x] == guess) return 0;
+    if (puzzle[x][column] == guess) return 0;
+    if (puzzle[corner_x + (x % 3)][corner_y + (x / 3)] == guess) return 0;
+  }
+  return 1;
+}
+
+int solve(int puzzle[][9]) {
+  int row;
+  int column;
+
+  if(!find_empty_cell(puzzle, &row, &column)) return 1;
+
+  for (int guess = 1; guess < 10; guess++) {
+    if (valid(puzzle, row, column, guess)) {
+      puzzle[row][column] = guess;
+
+      if(solve(puzzle)) return 1;
+      puzzle[row][column] = 0;
+    }
+  }
+  return 0;
+}
 void print(int arr[9][9])
 {
 	for(int i = 0; i < 9; i++)
@@ -85,13 +132,9 @@ void *checkThreadSquare(int puzzle[9][9])
 	printf("Squares solution correct");
 	pthread_exit(0);
 }
-
-
-void solveSudoku(int puzzle[9][9]){
-	
-}
-int main (int argc, char *argv[])
+int main(int argc, char const *argv[])
 {
+
 //temporary array until the read function is made;
 	
 	//read function below
@@ -120,18 +163,35 @@ int main (int argc, char *argv[])
 	}
 	*/
 	int sudokuArray[9][9]={
-	{5,3,4,6,7,8,9,1,2},
-	{6,7,2,1,9,5,3,4,8},
-	{1,9,8,3,4,2,5,6,7},
-	{8,5,9,7,6,1,4,2,3},
-	{4,2,6,8,5,3,7,9,1},
-	{7,1,3,9,2,4,8,5,6},
-	{9,6,1,5,3,7,2,8,4},
-	{2,8,7,4,1,9,6,3,5},
-	{3,4,5,2,8,6,1,7,9},
+		{5, 3, 4, 6, 7, 8, 9, 1, 2},
+		{6, 7, 2, 1, 9, 5, 3, 4, 8},
+		{1, 9, 8, 3, 4, 2, 5, 6, 7},
+		{8, 5, 9, 7, 6, 1, 4, 2, 3},
+		{4, 2, 6, 8, 5, 3, 7, 9, 1},
+		{7, 1, 3, 9, 2, 4, 8, 5, 6},
+		{9, 6, 1, 5, 3, 7, 2, 8, 4},
+		{2, 8, 7, 4, 1, 9, 6, 3, 5},
+		{3, 4, 5, 2, 8, 6, 1, 7, 9}
 	};
-	checkSudoku(sudokuArray);
-	//print(sudokuArray2);
+
+	int sudokuArray2[9][9]={
+		{1, 7, 4, 0, 9, 0, 6, 0, 0},
+        {0, 0, 0, 0, 3, 8, 1, 5, 7},
+        {5, 3, 0, 7, 0, 1, 0, 0, 4},
+        {0, 0, 7, 3, 4, 9, 8, 0, 0},
+        {8, 4, 0, 5, 0, 0, 3, 6, 0},
+        {3, 0, 5, 0, 0, 6, 4, 7, 0},
+        {2, 8, 6, 9, 0, 0, 0, 0, 1},
+        {0, 0, 0, 6, 2, 7, 0, 3, 8},
+        {0, 5, 3, 0, 8, 0, 0, 9, 6}
+		};
+	printf("Your Sudoku puzzle is");
+	print(sudokuArray2);
+	printf("Solving now \n")
+	if(solve(sudokuArray2)){
+		print(sudokuArray2);
+	}
+
 
 
 }
