@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+
 int sudoku[9][9];
 
 
-int valid(int[][9], int, int, int);
-int solve(int[][9]);
-int find_empty_cell(int[][9], int *, int *);
+int valid(int[9][9], int, int, int);
+int solve(int[9][9]);
+int find_empty_cell(int[9][9], int *, int *);
 
 //find next empty cell
-int find_empty_cell(int puzzle[][9], int *row, int *column) {
+int find_empty_cell(int puzzle[9][9], int *row, int *column) {
   for (int x = 0; x < 9; x++) {
     for (int y = 0; y < 9; y++) {
       if (!puzzle[x][y]) {
@@ -22,7 +23,7 @@ int find_empty_cell(int puzzle[][9], int *row, int *column) {
   return 0;
 }
 
-int valid(int puzzle[][9], int row, int column, int guess) {
+int valid(int puzzle[9][9], int row, int column, int guess) {
   int corner_x = row / 3 * 3;
   int corner_y = column / 3 * 3;
 
@@ -34,7 +35,7 @@ int valid(int puzzle[][9], int row, int column, int guess) {
   return 1;
 }
 
-int solve(int puzzle[][9]) {
+int solve(int puzzle[9][9]) {
   int row;
   int column;
 
