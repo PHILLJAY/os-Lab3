@@ -64,8 +64,9 @@ void print(int arr[9][9])
 }
 
 //threads down below
-void *checkThreadY(int puzzle[9][9])
+void *checkThreadY(void *args)
 {
+	int (*puzzle)[9] = (int(*)[9]) (args);
 	printf("I am the Y checker thread");
 	
 	int i, j, k, total;
@@ -85,8 +86,9 @@ void *checkThreadY(int puzzle[9][9])
 	pthread_exit(0);
 }
 
-void *checkThreadX(int puzzle[9][9])
+void *checkThreadX(void *args)
 {
+	int (*puzzle)[9] = (int(*)[9]) (args);
 	printf("I am the X checker thread");
 	
 	int i, j, k, total;
@@ -107,8 +109,9 @@ void *checkThreadX(int puzzle[9][9])
 	pthread_exit(0);
 }
 
-void *checkThreadSquare(int puzzle[9][9])
+void *checkThreadSquare(void *args)
 {
+	int (*puzzle)[9] = (int(*)[9]) (args);
 	printf("I am the Square checker thread");
 	
 	int i, j, k, l, total1, total2, total3;
