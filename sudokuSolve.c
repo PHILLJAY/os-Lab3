@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
 	{2,8,7,4,1,9,6,3,5},
 	{3,4,5,2,8,6,1,7,9},
 	};
-	int checkSudoku(sudokuArray);
+	checkSudoku(sudokuArray);
 	//print(sudokuArray2);
 
 
