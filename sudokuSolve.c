@@ -20,11 +20,11 @@ void *checkThreadY(int puzzle[9][9])
 {
 	printf("I am the Y checker thread");
 	
-	int puzzle[9][9], i, j, k, total, n = 9;
-	for (j=1;j<=n;j++) {
+	int puzzle[9][9], i, j, k, total;
+	for (j=1;j<=9;j++) {
 		for(k=j;k==j;k++) {
 			total=0;
-			for (i=1;i<=n;i++) {
+			for (i=1;i<=9;i++) {
 				total = total + puzzle[i][j];
 				}
 			if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
@@ -41,11 +41,11 @@ void *checkThreadX(int puzzle[9][9])
 {
 	printf("I am the X checker thread");
 	
-	int puzzle[9][9], i, j, k, total, n = 9;
-	for (i=1;i<=n;i++) {
+	int puzzle[9][9], i, j, k, total;
+	for (i=1;i<=9;i++) {
 		for (k=i;k==i;k++) {
 			total=0;
-			for (j=1;j<=n;j++) {
+			for (j=1;j<=9;j++) {
 				total = total + puzzle[i][j];
 				}
 
