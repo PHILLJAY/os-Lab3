@@ -31,12 +31,10 @@ void *checkThreadY(int puzzle[9][9])
 				printf("Current Y solution not correct");
 				exit(0);
 			}
-			else{
-				printf("Y solution correct");
-				return 0;
-			}
 		}
-        }
+         }
+        printf("X solution correct");
+	return 0;
 }
 
 void *checkThreadX(int puzzle[9][9])
@@ -55,12 +53,10 @@ void *checkThreadX(int puzzle[9][9])
 				printf("Current X solution not correct");
 				exit(0);
 			}
-			else{
-				printf("X solution correct");
-				return 0;
-			}
 		}
         }
+        printf("X solution correct");
+	return 0;
 }
 
 void *checkThreadSquare(int puzzle[9][9])
