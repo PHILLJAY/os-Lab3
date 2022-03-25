@@ -16,19 +16,19 @@ void print(int arr[9][9])
 }
 
 //threads down below
-void *solveThreadY()
+void *solveThreadY(int puzzle[9][9])
 {
 	int tempArray[9];
 	printf("I am the Y solver thread");
 }
 
-void *solveThreadX()
+void *solveThreadX(int puzzle[9][9])
 {
 	int tempArray[9];
 	printf("I am the X solver thread");
 }
 
-void *solveThreadSquare()
+void *solveThreadSquare(int puzzle[9][9])
 {
 	int tempArray[9];
 	printf("I am the Square solver thread");
@@ -85,9 +85,9 @@ int checkSudoku (int puzzle[9][9])
 	pthread_t t1;
 	pthread_t t2;
 	pthread_t t3;
-	pthread_create(&t1, NULL, &solveThreadSquare, NULL);
-	pthread_create(&t2, NULL, &solveThreadY, NULL);
-	pthread_create(&t3, NULL, &solveThreadX, NULL);
+	pthread_create(&t1, NULL, &solveThreadSquare, puzzle);
+	pthread_create(&t2, NULL, &solveThreadY, puzzle);
+	pthread_create(&t3, NULL, &solveThreadX, puzzle);
 	pthread_join(t1,NULL);
 	pthread_join(t2,NULL);
 	pthread_join(t3,NULL);
