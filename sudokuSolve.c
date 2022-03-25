@@ -77,7 +77,7 @@ void *checkThreadSquare(int puzzle[9][9])
 		        	total3 = total3 + puzzle[i][j];
 		    		}
         	}
-        	if (total1!=45||total2!=45||total3!=45) {
+        	if (total1!=45||total2!=45||total3!=45) { //each square must equal 45 as 1+2+3+4+5+6+7+8+9=45
             		printf("Current Square solution not correct");
 			exit(0);
 			}
