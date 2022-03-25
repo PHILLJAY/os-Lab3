@@ -68,7 +68,7 @@ void *checkThreadY(int puzzle[9][9])
 {
 	printf("I am the Y checker thread");
 	
-	int puzzle[9][9], i, j, k, total;
+	int i, j, k, total;
 	for (j=1;j<=9;j++) {
 		for(k=j;k==j;k++) {
 			total=0;
@@ -89,7 +89,7 @@ void *checkThreadX(int puzzle[9][9])
 {
 	printf("I am the X checker thread");
 	
-	int puzzle[9][9], i, j, k, total;
+	int i, j, k, total;
 	for (i=1;i<=9;i++) {
 		for (k=i;k==i;k++) {
 			total=0;
@@ -111,7 +111,7 @@ void *checkThreadSquare(int puzzle[9][9])
 {
 	printf("I am the Square checker thread");
 	
-	int puzzle[9][9], i, j, k, l, total1, total2, total3;
+	int i, j, k, l, total1, total2, total3;
 	for (k=1;k<=3;k++) {
         	l = (1+(k-1)*3);
         	for (i=l;i<=k*3;i++) {
@@ -142,7 +142,7 @@ int main(int argc, char const *argv[])
 	//does not work for now
 	/*
 	FILE *fp;
-	fp = fopen("sudoku", "r");//opens puzzle in read mode
+	fp = fopen("puzzle.txt", "r");//opens puzzle in read mode
 
 	if (fp == NULL)
 	{
