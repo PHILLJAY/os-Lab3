@@ -195,7 +195,9 @@ int main(int argc, char const *argv[])
 	if(solve(sudokuArray2)){
 		print(sudokuArray2);
 	}
-	checkSudoku(sudokuArray2);
+	if(checkSudoku(sudokuArray2)==1){
+		printf("Sudoku has been succesfully solved");
+	};
 }
 
 int checkSudoku (int puzzle[9][9])
