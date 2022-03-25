@@ -188,7 +188,7 @@ int main(int argc, char const *argv[])
 		};
 	printf("Your Sudoku puzzle is");
 	print(sudokuArray2);
-	printf("Solving now \n")
+	printf("Solving now \n");
 	if(solve(sudokuArray2)){
 		print(sudokuArray2);
 	}
