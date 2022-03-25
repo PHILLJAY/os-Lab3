@@ -29,12 +29,12 @@ void *checkThreadY(int puzzle[9][9])
 				}
 			if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
 				printf("Current Y solution not correct");
-				exit(0);
+				pthread_exit(0);
 			}
 		}
          }
         printf("Y solution correct");
-	return 0;
+	pthread_exit(0);
 }
 
 void *checkThreadX(int puzzle[9][9])
@@ -51,12 +51,12 @@ void *checkThreadX(int puzzle[9][9])
 
 			if(total!=45) { //row must equal 45 as 1+2+3+4+5+6+7+8+9=45
 				printf("Current X solution not correct");
-				exit(0);
+				pthread_exit(0);
 			}
 		}
         }
         printf("X solution correct");
-	return 0;
+	pthread_exit(0);
 }
 
 void *checkThreadSquare(int puzzle[9][9])
@@ -79,11 +79,11 @@ void *checkThreadSquare(int puzzle[9][9])
         	}
         	if (total1!=45||total2!=45||total3!=45) { //each square must equal 45 as 1+2+3+4+5+6+7+8+9=45
             		printf("Current Square solution not correct");
-			exit(0);
+			pthread_exit(0);
 			}
 	}
 	printf("Squares solution correct");
-	return 0;
+	pthread_exit(0);
 }
 
 
