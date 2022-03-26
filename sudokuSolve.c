@@ -79,7 +79,7 @@ void *checkThreadY(void *args)
 		int temp = 0;
 		for (int y = 0; y<9; y++)
 		{
-			printf("%d\n", puzzle[y][x]);
+			printf("%d\n", (int)puzzle[y][x]);
 			temp += puzzle[y][x];
 		}
 		//debugging code ignore
