@@ -215,7 +215,7 @@ int main(int argc, char const *argv[])
 	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
 		perror("thread creation failed");
 	}
-	if (pthread_join(&th, NULL)!=0){
+	if (pthread_join(th, NULL)!=0){
 		perror("thread join failed");
 	}
 	//printf("Your Sudoku puzzle is");
