@@ -153,7 +153,7 @@ void *checkThreadSquare(void *args)
 		%3
 	*/
 	printf("I am the Square checker thread\n");
-	printf("The index you passed to me is: %d \n", index);
+	printf("The index you passed to me is: %d\n", index);
 	int temp = 0;
 	for (int x = 0; x < 3; x++)
 	{
@@ -163,7 +163,7 @@ void *checkThreadSquare(void *args)
 			temp += puzzle[y][x];
 		}
 	}
-	printf("Your temp value is %d \n", temp);
+	printf("Your temp value is %d\n", temp);
 	if (temp!=45)
 	{
 		*result = 1;
@@ -286,14 +286,14 @@ int checkSudoku ()
 		perror("thread creation failed");
 	}
 	//loops and creates 9 squareChecker threads
-	/*
+	
 	for (int i = 0; i < 10; i++)
 	{
 		int *a = malloc(sizeof(int));
 		a * = i;
 		if (pthread_create(&th[i], NULL,checkThreadSquare, a));
 	}
-	*/
+	
 	//joins x and y threads
 	if (pthread_join(thy, (void**) &res)!=0){
 		perror("thread join failed");
@@ -302,7 +302,13 @@ int checkSudoku ()
 	if (pthread_join(thx, (void**) &res)!=0){
 		perror("thread join failed");
 	}
-
+	for (int i = 0; i < 10; i++)
+	{
+		if (pthread_join(&th[i], (void**) &res)!=0){
+			perror("thread join failed");
+		};
+		returnVal += *res;
+	}
 
 	returnVal += *res;
 
