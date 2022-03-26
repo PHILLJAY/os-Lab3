@@ -105,7 +105,7 @@ void *checkThreadY(void *args)
     //     }
     //    printf("Y solution correct");
 	//pthread_exit(0);
-}
+
 
 void *checkThreadX(void *args)
 {
