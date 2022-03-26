@@ -66,17 +66,22 @@ void print(int arr[9][9])
 //threads down below
 void *checkThreadY(void *args)
 {
+	//Casts args into an int array to be worked on
 	int (*puzzle)[9][9] = (int(*)[9][9]) (args);
+	//debugging code
 	printf("I am the Y checker thread");
+	//allocates an int for returning
 	int *result = malloc(sizeof(int));
 	*result = 0;
+	//Loops through array to check if each collumn sums to 45
 	for (int x = 0; x<9; x++)
 	{
 		int temp = 0;
 		for (int y = 0; y<9; y++)
 		{
-			temp += sudoku[y][x];
+			temp +=  puzzle[y][x];
 		}
+		//debugging code ignore
 		printf("%d Temp value is\n", temp);
 		if (temp != 45)
 		{
@@ -206,7 +211,7 @@ int main(int argc, char const *argv[])
         {0, 5, 3, 0, 8, 0, 0, 9, 6}
 		};
 	pthread_t th;
-	if (pthread_create(&th, NULL, &checkThreadY, )!=0){
+	if (pthread_create(&th, NULL, &checkThreadY, sudokuArray[9][9])!=0){
 		perror("thread creation failed");
 	}
 	if (pthread_join(&th, NULL)!=0){
