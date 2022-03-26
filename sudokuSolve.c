@@ -212,7 +212,7 @@ int main(int argc, char const *argv[])
         {0, 5, 3, 0, 8, 0, 0, 9, 6}
 		};
 	pthread_t th;
-	if (pthread_create(&th, NULL, &checkThreadY, sudokuArray[9][9])!=0){
+	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
 		perror("thread creation failed");
 	}
 	if (pthread_join(&th, NULL)!=0){
