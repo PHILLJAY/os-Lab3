@@ -220,9 +220,9 @@ int main(int argc, char const *argv[])
 		perror("thread creation failed");
 	}
 
-	//if (pthread_join(th, (void**) &res)!=0){
-	//	perror("thread join failed");
-	//}
+	if (pthread_join(th, (void**) &res)!=0){
+		perror("thread join failed");
+	}
 
 	/*
 	if(solve(sudokuArray2)){
