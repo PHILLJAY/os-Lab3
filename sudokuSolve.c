@@ -219,7 +219,7 @@ int main(int argc, char const *argv[])
 	if (pthread_create(&th, NULL, &checkThreadSquare, test)!=0){
 		perror("thread creation failed");
 	} else{
-		printf("I have created the thread\n")
+		printf("I have created the thread\n");
 	}
 
 	if (pthread_join(th, (void**) &res)!=0){
