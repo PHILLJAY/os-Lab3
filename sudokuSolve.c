@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <math.h>
 
 int puzzle[9][9]={
 		{5, 3, 4, 6, 7, 8, 9, 1, 2},
@@ -20,10 +21,7 @@ int find_empty_cell(int[9][9], int *, int *);
 
 
 //struct to pass 2 ints to a thread
-struct Coor {
-	int x;
-	int y;
-}
+
 
 //find next empty cell
 int find_empty_cell(int puzzle[9][9], int *row, int *column) 
@@ -111,23 +109,6 @@ void *checkThreadY(void *args)
 	}
 	return ((void *) result);
 }
-//old code (did not work)
-int i, j, k, total;
-for (j=1;j<=9;j++) {
-	for(k=j;k==j;k++) {
-		total=0;
-		for (i=1;i<=9;i++) {
-			total = total + puzzle[i][j];
-			}
-		if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
-			printf("Current Y solution not correct");
-			pthread_exit(0);
-		}
-	}
-     }
-    printf("Y solution correct");
-pthread_exit(0);
-
 
 void *checkThreadX(void *args)
 {
@@ -158,32 +139,17 @@ void *checkThreadX(void *args)
 
 void *checkThreadSquare(void *args)
 {
-
-	TODO: #1 Finish this up
-	//int (*puzzle)[9] = (int(*)[9]) (args);
+	/*
+	get x from #
+		/3 then floor
+	get y from #
+		%3
+	*/
+	int index = *(int *)arg;
+	int *result = malloc(sizeof(int));
+	*result = 0;
 	printf("I am the Square checker thread");
-	
-
-	//for (k=1;k<=3;k++) {
-    //    	l = (1+(k-1)*3);
-    //    	for (i=l;i<=k*3;i++) {
-	//	    	for(j=1;j<=3;j++) {
-	//	        	total1 = total1 + puzzle[i][j];
-	//	    		}
-	//	    	for (j=4;j<=6;j++) {
-	//	       	total2 = total2 + puzzle[i][j];
-	//	    		}
-	//	    	for (j=7;j<=9;j++) {
-	//	        	total3 = total3 + puzzle[i][j];
-	//	    		}
-    //    	}
-    //    	if (total1!=45||total2!=45||total3!=45) { //each square must equal 45 as 1+2+3+4+5+6+7+8+9=45
-    //        		printf("Current Square solution not correct");
-	//		pthread_exit(0);
-	//		}
-	//}
-	printf("Squares solution correct");
-	pthread_exit(0);
+	free(arg);
 }
 int main(int argc, char const *argv[])
 {
@@ -191,11 +157,11 @@ int main(int argc, char const *argv[])
 	int resultMaster = 0;
 
 	// temporary array until the read function is made;
+	/*
 	TODO: #2 Make Read Function
 	TODO: #3 Make Print Fucnction
 	TODO: #4 Make interactable Y/N menu
-	//read function below
-	//does not work for now
+	*/
 	/*
 	FILE *fp;
 	fp = fopen("puzzle.txt", "r");//opens puzzle in read mode
@@ -243,10 +209,10 @@ int main(int argc, char const *argv[])
         {0, 5, 3, 0, 8, 0, 0, 9, 6}
 		};
 	// TESTING CODE BELOW
-	structs Coor test;
-	coor.x = 0;
-	coor.y = 0;
+
 	pthread_t th;
+	int *test = malloc(sizeof(int));
+	*test = 0;
 	if (pthread_create(&th, NULL, checkThreadSquare, *test)!=0){
 		perror("thread creation failed");
 	}
@@ -291,7 +257,9 @@ int checkSudoku ()
 	//loops and creates 9 squareChecker threads
 	for (int i = 0; i < 10; i++)
 	{
-		if (pthread_create(&th[i], NULL,checkThreadSquare,  ))
+		int *a = malloc(sizeof(int));
+		a * = i;
+		if (pthread_create(&th[i], NULL,checkThreadSquare, a))
 	}
 
 	//joins x and y threads
