@@ -2,7 +2,8 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-int puzzle[9][9];
+ 
+int* puzzle[9][9] = malloc(sizeof(int[9][9]));
 
 
 int valid(int[9][9], int, int, int);
@@ -67,7 +68,7 @@ void print(int arr[9][9])
 void *checkThreadY(void *args)
 {
 	//Casts args into an int array to be worked on
-	int (*puzzle)[9][9] = (int(*)[9][9]) (args);
+	
 	//debugging code
 	printf("I am the Y checker thread\n \n");
 	//allocates an int for returning
@@ -80,7 +81,7 @@ void *checkThreadY(void *args)
 		for (int y = 0; y<9; y++)
 		{
 			printf("%d\n", (int)puzzle[y][x]);
-			temp += puzzle[y][x];
+			temp += (int)puzzle[y][x];
 		}
 		//debugging code ignore
 		printf("Temp value is:\n %d \n ", temp);
@@ -91,6 +92,7 @@ void *checkThreadY(void *args)
 	}
 	return ((void *) result);
 }
+//old code (did not work)
 	//int i, j, k, total;
 	//for (j=1;j<=9;j++) {
 	//	for(k=j;k==j;k++) {
