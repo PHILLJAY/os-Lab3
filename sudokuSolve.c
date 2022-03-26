@@ -69,7 +69,7 @@ void *checkThreadY(void *args)
 	//Casts args into an int array to be worked on
 	int (*puzzle)[9][9] = (int(*)[9][9]) (args);
 	//debugging code
-	printf("I am the Y checker thread");
+	printf("I am the Y checker thread\n \n");
 	//allocates an int for returning
 	int *result = malloc(sizeof(int));
 	*result = 0;
@@ -82,7 +82,7 @@ void *checkThreadY(void *args)
 			temp +=  puzzle[y][x];
 		}
 		//debugging code ignore
-		printf("%d Temp value is\n", temp);
+		printf("Temp value is:\n %d \n ", temp);
 		if (temp != 45)
 		{
 			*result = 1;
