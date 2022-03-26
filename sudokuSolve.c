@@ -145,7 +145,7 @@ void *checkThreadSquare(void *args)
 	get y from #
 		%3
 	*/
-	int index = *(int *)arg;
+	int index = *(int *)args;
 	int *result = malloc(sizeof(int));
 	*result = 0;
 	printf("I am the Square checker thread");
@@ -257,13 +257,14 @@ int checkSudoku ()
 		perror("thread creation failed");
 	}
 	//loops and creates 9 squareChecker threads
+	/*
 	for (int i = 0; i < 10; i++)
 	{
 		int *a = malloc(sizeof(int));
 		a * = i;
-		if (pthread_create(&th[i], NULL,checkThreadSquare, a))
+		if (pthread_create(&th[i], NULL,checkThreadSquare, a));
 	}
-
+	*/
 	//joins x and y threads
 	if (pthread_join(thy, (void**) &res)!=0){
 		perror("thread join failed");
