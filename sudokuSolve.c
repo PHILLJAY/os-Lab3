@@ -18,6 +18,13 @@ int valid(int[9][9], int, int, int);
 int solve(int[9][9]);
 int find_empty_cell(int[9][9], int *, int *);
 
+
+//struct to pass 2 ints to a thread
+struct Coor {
+	int x;
+	int y;
+}
+
 //find next empty cell
 int find_empty_cell(int puzzle[9][9], int *row, int *column) 
 {
@@ -153,28 +160,28 @@ void *checkThreadSquare(void *args)
 {
 
 	TODO: #1 Finish this up
-	int (*puzzle)[9] = (int(*)[9]) (args);
+	//int (*puzzle)[9] = (int(*)[9]) (args);
 	printf("I am the Square checker thread");
 	
-	int i, j, k, l, total1, total2, total3;
-	for (k=1;k<=3;k++) {
-        	l = (1+(k-1)*3);
-        	for (i=l;i<=k*3;i++) {
-		    	for(j=1;j<=3;j++) {
-		        	total1 = total1 + puzzle[i][j];
-		    		}
-		    	for (j=4;j<=6;j++) {
-		       	total2 = total2 + puzzle[i][j];
-		    		}
-		    	for (j=7;j<=9;j++) {
-		        	total3 = total3 + puzzle[i][j];
-		    		}
-        	}
-        	if (total1!=45||total2!=45||total3!=45) { //each square must equal 45 as 1+2+3+4+5+6+7+8+9=45
-            		printf("Current Square solution not correct");
-			pthread_exit(0);
-			}
-	}
+
+	//for (k=1;k<=3;k++) {
+    //    	l = (1+(k-1)*3);
+    //    	for (i=l;i<=k*3;i++) {
+	//	    	for(j=1;j<=3;j++) {
+	//	        	total1 = total1 + puzzle[i][j];
+	//	    		}
+	//	    	for (j=4;j<=6;j++) {
+	//	       	total2 = total2 + puzzle[i][j];
+	//	    		}
+	//	    	for (j=7;j<=9;j++) {
+	//	        	total3 = total3 + puzzle[i][j];
+	//	    		}
+    //    	}
+    //    	if (total1!=45||total2!=45||total3!=45) { //each square must equal 45 as 1+2+3+4+5+6+7+8+9=45
+    //        		printf("Current Square solution not correct");
+	//		pthread_exit(0);
+	//		}
+	//}
 	printf("Squares solution correct");
 	pthread_exit(0);
 }
@@ -235,33 +242,27 @@ int main(int argc, char const *argv[])
         {0, 0, 0, 6, 2, 7, 0, 3, 8},
         {0, 5, 3, 0, 8, 0, 0, 9, 6}
 		};
+	// TESTING CODE BELOW
+	structs Coor test;
+	coor.x = 0;
+	coor.y = 0;
 	pthread_t th;
-	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
+	if (pthread_create(&th, NULL, checkThreadSquare, *test)!=0){
 		perror("thread creation failed");
 	}
+
 	if (pthread_join(th, (void**) &res)!=0){
 		perror("thread join failed");
 	}
-	printf("Result: %d\n", *res);
-	resultMaster += *res;
-	pthread_t th2;
-	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
-		perror("thread creation failed");
+
+	/*
+	if(solve(sudokuArray2)){
+		print(sudokuArray2);
 	}
-	if (pthread_join(th, (void**) &res)!=0){
-		perror("thread join failed");
-	}
-	printf("Result: %d\n", *res);
-	resultMaster += *res;
-	//printf("Your Sudoku puzzle is");
-	//print(sudokuArray2);
-	//printf("Solving now \n");
-	//if(solve(sudokuArray2)){
-	//	print(sudokuArray2);
-	//}
-	//if(checkSudoku(sudokuArray2)==1){
-	//	printf("Sudoku has been succesfully solved");
-	//};
+	if(checkSudoku(sudokuArray2)==1){
+		printf("Sudoku has been succesfully solved");
+	};
+	*/
 	printf("Result: %d\n", resultMaster);
 }
 
@@ -270,18 +271,42 @@ void assignToGlobal(){
 }
 
 
-int checkSudoku (int puzzle[9][9])
+int checkSudoku ()
 {
-	pthread_t t1;
-	pthread_t t2;
-	pthread_t t3;
-	pthread_create(&t1, NULL, &checkThreadSquare, NULL);
-	pthread_create(&t2, NULL, &checkThreadY, NULL);
-	pthread_create(&t3, NULL, &checkThreadX, NULL);
-	pthread_join(t1,NULL);
-	pthread_join(t2,NULL);
-	pthread_join(t3,NULL);
-	return 1;
+	int returnVal = 0;
+	int *res = 0;
+	//coor squares[9];
+	pthread_t thy;
+	pthread_t thx;
+	pthread_t th[10];
+
+
+	//creates one instance of the x and y threads
+	if (pthread_create(&thy, NULL, &checkThreadY, NULL)!=0){
+		perror("thread creation failed");
+	}
+	if (pthread_create(&thx, NULL, &checkThreadX, NULL)!=0){
+		perror("thread creation failed");
+	}
+	//loops and creates 9 squareChecker threads
+	for (int i = 0; i < 10; i++)
+	{
+		if (pthread_create(&th[i], NULL,checkThreadSquare,  ))
+	}
+
+	//joins x and y threads
+	if (pthread_join(thy, (void**) &res)!=0){
+		perror("thread join failed");
+	}
+	returnVal += *res;
+	if (pthread_join(thx, (void**) &res)!=0){
+		perror("thread join failed");
+	}
+
+
+	returnVal += *res;
+
+	return returnVal;
 }
 
 
