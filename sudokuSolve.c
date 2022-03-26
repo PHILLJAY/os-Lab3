@@ -144,8 +144,10 @@ void *checkThreadSquare(void *args)
 	*result = 0;
 	int x1 = 0;
 	int y1 = 0;
-	x1 = (int)floor(index / 3) * 3;
+	x1 = ((int)floor(index / 3)) * 3;
+	printf("Your x1 value is: %d\n", x1);
 	y1 = (index % 3) * 3;
+	printf("Your y1 value is: %d\n", y1);
 	/*
 	get x from #
 		/3 then floor
