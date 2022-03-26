@@ -2,9 +2,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
- 
-int* puzzle[9][9] = malloc(sizeof(int[9][9]));
-
+int puzzle[9][9];
 
 int valid(int[9][9], int, int, int);
 int solve(int[9][9]);
@@ -80,8 +78,8 @@ void *checkThreadY(void *args)
 		int temp = 0;
 		for (int y = 0; y<9; y++)
 		{
-			printf("%d\n", (int)puzzle[y][x]);
-			temp += (int)puzzle[y][x];
+			printf("%d\n", puzzle[y][x]);
+			temp += puzzle[y][x];
 		}
 		//debugging code ignore
 		printf("Temp value is:\n %d \n ", temp);
