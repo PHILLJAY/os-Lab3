@@ -234,16 +234,23 @@ int main(int argc, char const *argv[])
 	pthread_t th;
 	int *test = malloc(sizeof(int));
 	*test = 0;
-	//something breaks here
-	if (pthread_create(&th, NULL, &checkThreadSquare, test)!=0){
-		perror("thread creation failed");
-	} else{
-		printf("I have created the thread\n");
+	if (checkSudoku()>=1)
+	{
+		printf("Sudoku Solution is invalid \n"); 
 	}
+	
 
-	if (pthread_join(th, (void**) &res)!=0){
-		perror("thread join failed");
-	}
+	
+
+	// if (pthread_create(&th, NULL, &checkThreadSquare, test)!=0){
+	// 	perror("thread creation failed");
+	// } else{
+	// 	printf("I have created the thread\n");
+	// }
+
+	// if (pthread_join(th, (void**) &res)!=0){
+	// 	perror("thread join failed");
+	// }
 
 	/*
 	if(solve(sudokuArray2)){
