@@ -89,7 +89,7 @@ void *checkThreadY(void *args)
 		{	
 	}
 	return ((void *) result);
-
+}
 	//int i, j, k, total;
 	//for (j=1;j<=9;j++) {
 	//	for(k=j;k==j;k++) {
