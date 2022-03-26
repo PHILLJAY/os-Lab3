@@ -146,8 +146,8 @@ void *checkThreadX(void *args)
 		}	
 	}
 	return ((void *) result);
-});
-}
+};
+
 
 void *checkThreadSquare(void *args)
 {
