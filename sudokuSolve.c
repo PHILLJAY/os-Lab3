@@ -290,7 +290,7 @@ int checkSudoku ()
 	for (int i = 0; i < 10; i++)
 	{
 		int *a = malloc(sizeof(int));
-		a * = i;
+		*a = i;
 		if (pthread_create(&th[i], NULL,checkThreadSquare, a));
 	}
 	
