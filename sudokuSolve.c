@@ -130,10 +130,10 @@ void *checkThreadX(void *args)
 	int *result = malloc(sizeof(int));
 	*result = 0;
 	//Loops through array to check if each row sums to 45
-	for (int y = 0; x<9; x++)
+	for (int y = 0; y<9; y++)
 	{
 		int temp = 0;
-		for (int x = 0; y<9; y++)
+		for (int x = 0; x<9; x++)
 		{
 			printf("%d\n", puzzle[y][x]);
 			temp += puzzle[y][x];
