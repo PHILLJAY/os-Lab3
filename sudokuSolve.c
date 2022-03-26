@@ -19,45 +19,51 @@ int solve(int[9][9]);
 int find_empty_cell(int[9][9], int *, int *);
 
 //find next empty cell
-int find_empty_cell(int puzzle[9][9], int *row, int *column) {
-  for (int x = 0; x < 9; x++) {
-    for (int y = 0; y < 9; y++) {
-      if (!puzzle[x][y]) {
-        *row = x;
-        *column = y;
-        return 1;
-      }
-    }
-  }
+int find_empty_cell(int puzzle[9][9], int *row, int *column) 
+{
+	for (int x = 0; x < 9; x++)
+	{
+		for (int y = 0; y < 9; y++)
+		{
+			if (!puzzle[x][y])
+			{
+        	*row = x;
+        	*column = y;
+        	return 1;
+      		}
+    	}
+  	}
   return 0;
 }
 
-int valid(int puzzle[9][9], int row, int column, int guess) {
-  int corner_x = row / 3 * 3;
-  int corner_y = column / 3 * 3;
+int valid(int puzzle[9][9], int row, int column, int guess)
+{
+	int corner_x = row / 3 * 3;
+	int corner_y = column / 3 * 3;
 
-  for (int x = 0; x < 9; ++x) {
-    if (puzzle[row][x] == guess) return 0;
-    if (puzzle[x][column] == guess) return 0;
-    if (puzzle[corner_x + (x % 3)][corner_y + (x / 3)] == guess) return 0;
-  }
-  return 1;
+	for (int x = 0; x < 9; ++x) 
+	{
+		if (puzzle[row][x] == guess) return 0;
+		if (puzzle[x][column] == guess) return 0;
+    	if (puzzle[corner_x + (x % 3)][corner_y + (x / 3)] == guess) return 0;
+ 	}
+  	return 1;
 }
 
-int solve(int puzzle[9][9]) {
-  int row;
-  int column;
-
-  if(!find_empty_cell(puzzle, &row, &column)) return 1;
-
-  for (int guess = 1; guess < 10; guess++) {
-    if (valid(puzzle, row, column, guess)) {
-      puzzle[row][column] = guess;
-
-      if(solve(puzzle)) return 1;
-      puzzle[row][column] = 0;
-    }
-  }
+int solve(int puzzle[9][9])
+{
+	int row;
+	int column;	
+	if(!find_empty_cell(puzzle, &row, &column)) return 1;	
+	for (int guess = 1; guess < 10; guess++)
+	{
+		if (valid(puzzle, row, column, guess))
+		{
+			puzzle[row][column] = guess;	
+			if(solve(puzzle)) return 1;
+			puzzle[row][column] = 0;
+		}
+	}
   return 0;
 }
 void print(int arr[9][9])
@@ -75,8 +81,6 @@ void print(int arr[9][9])
 //threads down below
 void *checkThreadY(void *args)
 {
-	//Casts args into an int array to be worked on
-	
 	//debugging code
 	printf("I am the Y checker thread\n \n");
 	//allocates an int for returning
@@ -120,25 +124,29 @@ void *checkThreadY(void *args)
 
 void *checkThreadX(void *args)
 {
-	int (*puzzle)[9] = (int(*)[9]) (args);
-	printf("I am the X checker thread");
-	
-	int i, j, k, total;
-	for (i=1;i<=9;i++) {
-		for (k=i;k==i;k++) {
-			total=0;
-			for (j=1;j<=9;j++) {
-				total = total + puzzle[i][j];
-				}
-
-			if(total!=45) { //row must equal 45 as 1+2+3+4+5+6+7+8+9=45
-				printf("Current X solution not correct");
-				pthread_exit(0);
-			}
+	//debugging code
+	printf("I am the Y checker thread\n \n");
+	//allocates an int for returning
+	int *result = malloc(sizeof(int));
+	*result = 0;
+	//Loops through array to check if each row sums to 45
+	for (int y = 0; x<9; x++)
+	{
+		int temp = 0;
+		for (int x = 0; y<9; y++)
+		{
+			printf("%d\n", puzzle[y][x]);
+			temp += puzzle[y][x];
 		}
-        }
-        printf("X solution correct");
-	pthread_exit(0);
+		//debugging code ignore
+		printf("Temp value is:\n %d \n ", temp);
+		if (temp != 45)
+		{
+			*result = 1;
+		}	
+	}
+	return ((void *) result);
+});
 }
 
 void *checkThreadSquare(void *args)
@@ -171,6 +179,7 @@ void *checkThreadSquare(void *args)
 int main(int argc, char const *argv[])
 {
 	int *res = 0;
+	int resultMaster = 0;
 
 	// temporary array until the read function is made;
 	
@@ -229,6 +238,14 @@ int main(int argc, char const *argv[])
 	if (pthread_join(th, (void**) &res)!=0){
 		perror("thread join failed");
 	}
+	resultMaster += *res;
+	pthread_t th2;
+	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
+		perror("thread creation failed");
+	}
+	if (pthread_join(th, (void**) &res)!=0){
+		perror("thread join failed");
+	}
 	//printf("Your Sudoku puzzle is");
 	//print(sudokuArray2);
 	//printf("Solving now \n");
@@ -241,14 +258,19 @@ int main(int argc, char const *argv[])
 	printf("Result: %d\n", *res);
 }
 
+void assignToGlobal(){
+	//asigns read array to the global one
+}
+
+
 int checkSudoku (int puzzle[9][9])
 {
 	pthread_t t1;
 	pthread_t t2;
 	pthread_t t3;
-	pthread_create(&t1, NULL, &checkThreadSquare, puzzle);
-	pthread_create(&t2, NULL, &checkThreadY, puzzle);
-	pthread_create(&t3, NULL, &checkThreadX, puzzle);
+	pthread_create(&t1, NULL, &checkThreadSquare, NULL);
+	pthread_create(&t2, NULL, &checkThreadY, NULL);
+	pthread_create(&t3, NULL, &checkThreadX, NULL);
 	pthread_join(t1,NULL);
 	pthread_join(t2,NULL);
 	pthread_join(t3,NULL);
