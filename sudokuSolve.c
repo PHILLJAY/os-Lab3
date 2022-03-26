@@ -170,8 +170,9 @@ void *checkThreadSquare(void *args)
 }
 int main(int argc, char const *argv[])
 {
+	int *res = 0;
 
-//temporary array until the read function is made;
+	// temporary array until the read function is made;
 	
 	//read function below
 	//does not work for now
@@ -225,7 +226,7 @@ int main(int argc, char const *argv[])
 	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
 		perror("thread creation failed");
 	}
-	if (pthread_join(th, NULL)!=0){
+	if (pthread_join(th, (void**) &res)!=0){
 		perror("thread join failed");
 	}
 	//printf("Your Sudoku puzzle is");
@@ -237,6 +238,7 @@ int main(int argc, char const *argv[])
 	//if(checkSudoku(sudokuArray2)==1){
 	//	printf("Sudoku has been succesfully solved");
 	//};
+	printf("Result: %d\n, *res");
 }
 
 int checkSudoku (int puzzle[9][9])
