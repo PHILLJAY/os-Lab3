@@ -150,11 +150,11 @@ void *checkThreadSquare(void *args)
 	*result = 0;
 	printf("I am the Square checker thread");
 	free(arg);
+	return ((void *) result);
 }
 int main(int argc, char const *argv[])
 {
-	int *res = 0;
-	int resultMaster = 0;
+
 
 	// temporary array until the read function is made;
 	/*
@@ -210,6 +210,8 @@ int main(int argc, char const *argv[])
 		};
 	// TESTING CODE BELOW
 
+	int *res = 0;
+	int resultMaster = 0;
 	pthread_t th;
 	int *test = malloc(sizeof(int));
 	*test = 0;
