@@ -144,8 +144,8 @@ void *checkThreadSquare(void *args)
 	*result = 0;
 	int x1 = 0;
 	int y1 = 0;
-	x1 = (int)floor(index / 3);
-	y1 = index % 3;
+	x1 = (int)floor(index / 3) * 3;
+	y1 = (index % 3) * 3;
 	/*
 	get x from #
 		/3 then floor
@@ -159,8 +159,8 @@ void *checkThreadSquare(void *args)
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			printf("%d \n", puzzle[y][x]);
-			temp += puzzle[y][x];
+			printf("%d \n", puzzle[y+y1][x+x1]);
+			temp += puzzle[y+y1][x+x1];
 		}
 	}
 	printf("Your temp value is %d\n", temp);
