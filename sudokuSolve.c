@@ -148,7 +148,8 @@ void *checkThreadSquare(void *args)
 	int index = *(int *)args;
 	int *result = malloc(sizeof(int));
 	*result = 0;
-	printf("I am the Square checker thread");
+	printf("I am the Square checker thread\n");
+	printf("The index you passed to me is: %d \n", index);
 	free(args);
 	return ((void *) result);
 }
