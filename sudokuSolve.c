@@ -105,21 +105,21 @@ void *checkThreadY(void *args)
 	return ((void *) result);
 }
 //old code (did not work)
-	//int i, j, k, total;
-	//for (j=1;j<=9;j++) {
-	//	for(k=j;k==j;k++) {
-	//		total=0;
-	//		for (i=1;i<=9;i++) {
-	//			total = total + puzzle[i][j];
-	//			}
-	//		if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
-	//			printf("Current Y solution not correct");
-	//			pthread_exit(0);
-	//		}
-	//	}
-    //     }
-    //    printf("Y solution correct");
-	//pthread_exit(0);
+int i, j, k, total;
+for (j=1;j<=9;j++) {
+	for(k=j;k==j;k++) {
+		total=0;
+		for (i=1;i<=9;i++) {
+			total = total + puzzle[i][j];
+			}
+		if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
+			printf("Current Y solution not correct");
+			pthread_exit(0);
+		}
+	}
+     }
+    printf("Y solution correct");
+pthread_exit(0);
 
 
 void *checkThreadX(void *args)
@@ -151,6 +151,8 @@ void *checkThreadX(void *args)
 
 void *checkThreadSquare(void *args)
 {
+
+	TODO: #1 Finish this up
 	int (*puzzle)[9] = (int(*)[9]) (args);
 	printf("I am the Square checker thread");
 	
@@ -182,7 +184,9 @@ int main(int argc, char const *argv[])
 	int resultMaster = 0;
 
 	// temporary array until the read function is made;
-	
+	TODO: #2 Make Read Function
+	TODO: #3 Make Print Fucnction
+	TODO: #4 Make interactable Y/N menu
 	//read function below
 	//does not work for now
 	/*
