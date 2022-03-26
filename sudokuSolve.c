@@ -67,7 +67,7 @@ void print(int arr[9][9])
 void *checkThreadY(void *args)
 {
 	//Casts args into an int array to be worked on
-	int puzzle[9][9] = int[9][9])(args);
+	int puzzle[9][9] = (int(*))[9][9])(args);
 	//debugging code
 	printf("I am the Y checker thread");
 	//allocates an int for returning
