@@ -215,13 +215,14 @@ int main(int argc, char const *argv[])
 	pthread_t th;
 	int *test = malloc(sizeof(int));
 	*test = 0;
-	// if (pthread_create(&th, NULL, checkThreadSquare, *test)!=0){
-	// 	perror("thread creation failed");
-	// }
+	//something breaks here
+	if (pthread_create(&th, NULL, &checkThreadSquare, *test)!=0){
+		perror("thread creation failed");
+	}
 
-	// if (pthread_join(th, (void**) &res)!=0){
-	// 	perror("thread join failed");
-	// }
+	if (pthread_join(th, (void**) &res)!=0){
+		perror("thread join failed");
+	}
 
 	/*
 	if(solve(sudokuArray2)){
