@@ -139,17 +139,35 @@ void *checkThreadX(void *args)
 
 void *checkThreadSquare(void *args)
 {
+	int index = *(int *)args;
+	int *result = malloc(sizeof(int));
+	*result = 0;
+	int x1 = 0;
+	int y1 = 0;
+	x1 = (int)floor(index / 3);
+	y1 = index % 3;
 	/*
 	get x from #
 		/3 then floor
 	get y from #
 		%3
 	*/
-	int index = *(int *)args;
-	int *result = malloc(sizeof(int));
-	*result = 0;
 	printf("I am the Square checker thread\n");
 	printf("The index you passed to me is: %d \n", index);
+	int temp = 0;
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			printf("%d \n", puzzle[y][x]);
+			temp += puzzle[y][x];
+		}
+	}
+	printf("Your temp value is %d \n", temp);
+	if (temp!=45)
+	{
+		*result = 1;
+	}
 	free(args);
 	return ((void *) result);
 }
