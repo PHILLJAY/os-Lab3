@@ -1,2 +1,2 @@
 sudokuSolve: sudokuSolve.c
-	gcc -c sudokuSolve sudokuSolve.c
+	gcc sudokuSolve.c -o sudokuSolve

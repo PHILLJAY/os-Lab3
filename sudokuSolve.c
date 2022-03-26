@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-int sudoku[9][9];
+int puzzle[9][9];
 
 
 int valid(int[9][9], int, int, int);
@@ -66,24 +66,40 @@ void print(int arr[9][9])
 //threads down below
 void *checkThreadY(void *args)
 {
-	int (*puzzle)[9] = (int(*)[9]) (args);
+	int (*puzzle)[9][9] = (int(*)[9][9]) (args);
 	printf("I am the Y checker thread");
-	
-	int i, j, k, total;
-	for (j=1;j<=9;j++) {
-		for(k=j;k==j;k++) {
-			total=0;
-			for (i=1;i<=9;i++) {
-				total = total + puzzle[i][j];
-				}
-			if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
-				printf("Current Y solution not correct");
-				pthread_exit(0);
-			}
+	int *result = malloc(sizeof(int));
+	*result = 0;
+	for (int x = 0; x<9; x++)
+	{
+		int temp = 0;
+		for (int y = 0; y<9; y++)
+		{
+			temp += sudoku[y][x];
 		}
-         }
-        printf("Y solution correct");
-	pthread_exit(0);
+		printf("%d Temp value is\n", temp);
+		if (temp != 45)
+		{
+			*result = 1;
+		{	
+	}
+	return ((void *)result);
+
+	//int i, j, k, total;
+	//for (j=1;j<=9;j++) {
+	//	for(k=j;k==j;k++) {
+	//		total=0;
+	//		for (i=1;i<=9;i++) {
+	//			total = total + puzzle[i][j];
+	//			}
+	//		if (total!=45) {//column must equal 45 as 1+2+3+4+5+6+7+8+9=45
+	//			printf("Current Y solution not correct");
+	//			pthread_exit(0);
+	//		}
+	//	}
+    //     }
+    //    printf("Y solution correct");
+	//pthread_exit(0);
 }
 
 void *checkThreadX(void *args)
@@ -189,15 +205,22 @@ int main(int argc, char const *argv[])
         {0, 0, 0, 6, 2, 7, 0, 3, 8},
         {0, 5, 3, 0, 8, 0, 0, 9, 6}
 		};
-	printf("Your Sudoku puzzle is");
-	print(sudokuArray2);
-	printf("Solving now \n");
-	if(solve(sudokuArray2)){
-		print(sudokuArray2);
+	pthread_t th;
+	if (pthread_create(&th, NULL, &checkThreadY, )!=0){
+		perror("thread creation failed");
 	}
-	if(checkSudoku(sudokuArray2)==1){
-		printf("Sudoku has been succesfully solved");
-	};
+	if (pthread_join(&th, NULL)!=0){
+		perror("thread join failed");
+	}
+	//printf("Your Sudoku puzzle is");
+	//print(sudokuArray2);
+	//printf("Solving now \n");
+	//if(solve(sudokuArray2)){
+	//	print(sudokuArray2);
+	//}
+	//if(checkSudoku(sudokuArray2)==1){
+	//	printf("Sudoku has been succesfully solved");
+	//};
 }
 
 int checkSudoku (int puzzle[9][9])
