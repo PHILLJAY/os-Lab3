@@ -238,6 +238,7 @@ int main(int argc, char const *argv[])
 	if (pthread_join(th, (void**) &res)!=0){
 		perror("thread join failed");
 	}
+	printf("Result: %d\n", *res);
 	resultMaster += *res;
 	pthread_t th2;
 	if (pthread_create(&th, NULL, &checkThreadY, NULL)!=0){
@@ -246,6 +247,8 @@ int main(int argc, char const *argv[])
 	if (pthread_join(th, (void**) &res)!=0){
 		perror("thread join failed");
 	}
+	printf("Result: %d\n", *res);
+	resultMaster += *res;
 	//printf("Your Sudoku puzzle is");
 	//print(sudokuArray2);
 	//printf("Solving now \n");
@@ -255,7 +258,7 @@ int main(int argc, char const *argv[])
 	//if(checkSudoku(sudokuArray2)==1){
 	//	printf("Sudoku has been succesfully solved");
 	//};
-	printf("Result: %d\n", *res);
+	printf("Result: %d\n", resultMaster);
 }
 
 void assignToGlobal(){
