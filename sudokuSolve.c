@@ -149,7 +149,7 @@ void *checkThreadSquare(void *args)
 	int *result = malloc(sizeof(int));
 	*result = 0;
 	printf("I am the Square checker thread");
-	free(arg);
+	free(args);
 	return ((void *) result);
 }
 int main(int argc, char const *argv[])
