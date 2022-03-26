@@ -86,7 +86,7 @@ void *checkThreadY(void *args)
 		if (temp != 45)
 		{
 			*result = 1;
-		{	
+		}	
 	}
 	return ((void *) result);
 }
