@@ -13,7 +13,7 @@ int puzzle[9][9]={
 		{9, 6, 1, 5, 3, 7, 2, 8, 4},
 		{2, 8, 7, 4, 1, 9, 6, 3, 5},
 		{3, 4, 5, 2, 8, 6, 1, 7, 9}
-	};
+};
 
 int valid(int[9][9], int, int, int);
 int solve(int[9][9]);
@@ -55,7 +55,7 @@ int valid(int sudoku[9][9], int row, int column, int guess)
   	return 1;
 }
 
-int solve(int sudoku[9][9])
+int solve(int sudoku[9][9])g
 {
 	int row;
 	int column;	
@@ -168,48 +168,29 @@ void *checkThreadSquare(void *args)
 }
 int main(int argc, char const *argv[])
 {
-
-
-	// temporary array until the read function is made;
-	/*
-	TODO: #2 Make Read Function
-	TODO: #3 Make Print Fucnction
-	TODO: #4 Make interactable Y/N menu
-	*/
-	/*
-	FILE *fp;
-	fp = fopen("puzzle.txt", "r");//opens puzzle in read mode
-
-	if (fp == NULL)
-	{
-		perror("Error while opening file.\n");
-		exit(0);
+	FILE *FILE1;
+	FILE1 = fopen("puzzle.txt", "r");
+	if(FILE1 == NULL){
+		printf("Error opening file.\n");
+		exit(1);
 	}
-	int sudokuArray2[9][9];
-	
-	for(int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			
-			fscanf(fp, "%d", sudokuArray2[i][j]);
-			printf("%d", sudokuArray2[i][j]);
-			printf("\n");
+
+	for(int i = 0; i < 9; i++){
+		for(int j = 0; j < 9; j++){
+			fscanf(FILE1, "%d", &puzzle[i][j]);
 		}
-
 	}
-	*/
-	int sudokuArray[9][9]={
-		{5, 3, 4, 6, 7, 8, 9, 1, 2},
-		{6, 7, 2, 1, 9, 5, 3, 4, 8},
-		{1, 9, 8, 3, 4, 2, 5, 6, 7},
-		{8, 5, 9, 7, 6, 1, 4, 2, 3},
-		{4, 2, 6, 8, 5, 3, 7, 9, 1},
-		{7, 1, 3, 9, 2, 4, 8, 5, 6},
-		{9, 6, 1, 5, 3, 7, 2, 8, 4},
-		{2, 8, 7, 4, 1, 9, 6, 3, 5},
-		{3, 4, 5, 2, 8, 6, 1, 7, 9}
-	};
+	fclose(FILE1);
+	printf("Your sudoku puzzle is: \n");
+	print(puzzle);
+	printf("\n");
+
+	printf("\nSolving the given puzzle......\n");
+
+	solve(puzzle);
+
+	print(puzzle);
+	printf("\n");
 
 	int sudokuArray2[9][9]={
 		{1, 7, 4, 0, 9, 0, 6, 0, 0},
@@ -229,6 +210,27 @@ int main(int argc, char const *argv[])
 	{
 		printf("Sudoku Solution is invalid \n"); 
 	}
+	else
+	{
+		printf("Sudoku Solution is valid \n"); 
+		FILE *FILE2;
+
+        FILE2= fopen("solution.txt","w+"); //open of create file named solution.txt
+        if(FILE2 == NULL){ // chek for error
+			printf("Error opening/creating file.\n");
+			exit(1);
+        }
+
+        for(int i = 0; i < 9; i++){ //for loop to add text to file
+			for(int j = 0; j < 9; j++){
+				fprintf(FILE2,"%d ", sudoku[i][j]);
+			}
+			fprintf(FILE2,"\n");
+        }
+		fclose(FILE2);
+		printf("Solution printed to solution.txt\n");
+	}
+	
 	
 
 	
@@ -253,12 +255,6 @@ int main(int argc, char const *argv[])
 	*/
 	//printf("Result: %d\n", resultMaster);
 }
-
-void assignToGlobal(){
-	//asigns read array to the global one
-}
-
-
 int checkSudoku ()
 {
 	int returnVal = 0;
