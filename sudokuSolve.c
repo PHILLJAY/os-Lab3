@@ -134,7 +134,6 @@ void *checkThreadX(void *args)
 	return ((void *) result);
 };
 
-
 void *checkThreadSquare(void *args)
 {
 	int index = *(int *)args;
@@ -182,6 +181,7 @@ int main(int argc, char const *argv[])
 			fscanf(FILE1, "%d", &puzzle[i][j]);
 		}
 	}
+
 	fclose(FILE1);
 	printf("Your sudoku puzzle is: \n");
 	print(puzzle);
@@ -193,8 +193,6 @@ int main(int argc, char const *argv[])
 
 	print(puzzle);
 	printf("\n");
-
-	// TESTING CODE BELOW
 
 	int *res = 0;
 	if (checkSudoku()>=1)
@@ -271,8 +269,7 @@ int checkSudoku ()
 		*a = i;
 		if (pthread_create(&th[i], NULL,checkThreadSquare, a));
 	}
-	printf("\n");
-	printf("Joining Threads now\n");
+
 	//joins x and y threads
 	if (pthread_join(thy, (void**) &res)!=0){
 		perror("thread join failed");
@@ -281,8 +278,7 @@ int checkSudoku ()
 	if (pthread_join(thx, (void**) &res)!=0){
 		perror("thread join failed");
 	}
-	printf("\n");
-	printf("Joining square Threads now\n");
+
 	for (int i = 0; i < 9; i++)
 	{
 		if (pthread_join(th[i], (void**) &res)!=0){
