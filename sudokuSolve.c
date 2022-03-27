@@ -168,9 +168,11 @@ void *checkThreadSquare(void *args)
 }
 int main(int argc, char const *argv[])
 {
+	//opening file code
 	FILE *FILE1;
 	FILE1 = fopen("puzzle.txt", "r");
 	if(FILE1 == NULL){
+		//throw error
 		printf("Error opening file.\n");
 		exit(1);
 	}
