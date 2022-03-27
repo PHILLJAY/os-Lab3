@@ -4,7 +4,7 @@
 #include <math.h>
 
 int puzzle[9][9]={
-		{5, 3, 4, 6, 7, 8, 9, 1, 2},
+		{6, 3, 4, 6, 7, 8, 9, 1, 2},
 		{6, 7, 2, 1, 9, 5, 3, 4, 8},
 		{1, 9, 8, 3, 4, 2, 5, 6, 7},
 		{8, 5, 9, 7, 6, 1, 4, 2, 3},
@@ -225,10 +225,6 @@ int main(int argc, char const *argv[])
 	// TESTING CODE BELOW
 
 	int *res = 0;
-	int resultMaster = 0;
-	pthread_t th;
-	int *test = malloc(sizeof(int));
-	*test = 0;
 	if (checkSudoku()>=1)
 	{
 		printf("Sudoku Solution is invalid \n"); 
@@ -255,7 +251,7 @@ int main(int argc, char const *argv[])
 		printf("Sudoku has been succesfully solved");
 	};
 	*/
-	printf("Result: %d\n", resultMaster);
+	//printf("Result: %d\n", resultMaster);
 }
 
 void assignToGlobal(){
