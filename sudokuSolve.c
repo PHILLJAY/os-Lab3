@@ -3,17 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-int puzzle[9][9]={
-		{5, 3, 4, 6, 7, 8, 9, 1, 2},
-		{6, 7, 2, 1, 9, 5, 3, 4, 8},
-		{1, 9, 8, 3, 4, 2, 5, 6, 7},
-		{8, 5, 9, 7, 6, 1, 4, 2, 3},
-		{4, 2, 6, 8, 5, 3, 7, 9, 1},
-		{7, 1, 3, 9, 2, 4, 8, 5, 6},
-		{9, 6, 1, 5, 3, 7, 2, 8, 4},
-		{2, 8, 7, 4, 1, 9, 6, 3, 5},
-		{3, 4, 5, 2, 8, 6, 1, 7, 9}
-};
+int puzzle[9][9];
 
 int valid(int[9][9], int, int, int);
 int solve(int[9][9]);
@@ -25,11 +15,13 @@ int find_empty_cell(int[9][9], int *, int *);
 
 //find next empty cell
 int find_empty_cell(int sudoku[9][9], int *row, int *column) 
+//loops through to find the first cell
 {
 	for (int x = 0; x < 9; x++)
 	{
 		for (int y = 0; y < 9; y++)
 		{
+			//When cell is empty, update the x and y coordinates to match it. Return 1 to indicate that a cell has been found
 			if (!sudoku[x][y])
 			{
         	*row = x;
@@ -48,6 +40,8 @@ int valid(int sudoku[9][9], int row, int column, int guess)
 
 	for (int x = 0; x < 9; ++x) 
 	{
+		//effeciant code to increment through each square, row and column of the guess
+		//if the number is found, return a 0, if the number is not found it returns a 1
 		if (sudoku[row][x] == guess) return 0;
 		if (sudoku[x][column] == guess) return 0;
     	if (sudoku[corner_x + (x % 3)][corner_y + (x / 3)] == guess) return 0;
@@ -59,19 +53,24 @@ int solve(int sudoku[9][9])
 {
 	int row;
 	int column;	
+	//if sudoku puzzle is solved (every cell is full) return 1
 	if(!find_empty_cell(sudoku, &row, &column)) return 1;	
 	for (int guess = 1; guess < 10; guess++)
+	//cycles through numbers 1 to 9 to check for a valid guess at each part
 	{
 		if (valid(sudoku, row, column, guess))
 		{
-			sudoku[row][column] = guess;	
+			sudoku[row][column] = guess;
+			//iterates deeper	
 			if(solve(sudoku)) return 1;
+			//if that guess does not yield a solution, set the square equal to 0 and iterate further
 			sudoku[row][column] = 0;
 		}
 	}
   return 0;
 }
 void print(int arr[9][9])
+//simple code that loops through the puzzle and prints it out
 {
 	for(int i = 0; i < 9; i++)
 		{
@@ -96,16 +95,15 @@ void *checkThreadY(void *args)
 		int temp = 0;
 		for (int y = 0; y<9; y++)
 		{
-			//printf("%d\n", puzzle[y][x]);
 			temp += puzzle[y][x];
 		}
-		//debugging code ignore
-		//printf("Temp value is:\n %d \n ", temp);
 		if (temp != 45)
+		//if any column does not equal 45 the result int will get switched to 1 and return 1
 		{
 			*result = 1;
 		}	
 	}
+	//returns the result casted as a void pointer
 	return ((void *) result);
 }
 
@@ -126,11 +124,13 @@ void *checkThreadX(void *args)
 		}
 		//debugging code ignore
 		//printf("Temp value is:\n %d \n ", temp);
-		if (temp != 45)
+			if (temp != 45)
+		//if any column does not equal 45 the result int will get switched to 1 and return 1
 		{
 			*result = 1;
 		}	
 	}
+	//returns the result casted as a void pointer
 	return ((void *) result);
 };
 
@@ -141,13 +141,10 @@ void *checkThreadSquare(void *args)
 	*result = 0;
 	int x1 = 0;
 	int y1 = 0;
+	//gets coordinates from a single int here
 	x1 = ((int)floor(index / 3)) * 3;
-	//printf("Your x1 value is: %d\n", x1);
 	y1 = (index % 3) * 3;
-	//printf("Your y1 value is: %d\n", y1);
 
-	//printf("I am the Square checker thread\n");
-	//printf("The index you passed to me is: %d\n", index);
 	int temp = 0;
 	for (int x = 0; x < 3; x++)
 	{
@@ -158,10 +155,14 @@ void *checkThreadSquare(void *args)
 		}
 	}
 	//printf("Your temp value is %d\n", temp);
-	if (temp!=45)
-	{
-		*result = 1;
+	if (temp != 45)
+		//if any column does not equal 45 the result int will get switched to 1 and return 1
+		{
+			*result = 1;
+		}	
 	}
+	//returns the result casted as a void pointer
+	//frees the argument (we allocated memory for it in the loop)
 	free(args);
 	return ((void *) result);
 }
@@ -181,7 +182,7 @@ int main(int argc, char const *argv[])
 			fscanf(FILE1, "%d", &puzzle[i][j]);
 		}
 	}
-
+	//closes file upon reading
 	fclose(FILE1);
 	printf("Your sudoku puzzle is: \n");
 	print(puzzle);
@@ -195,6 +196,7 @@ int main(int argc, char const *argv[])
 	printf("\n");
 
 	int *res = 0;
+	//if checkSudoku() returns more than 1 we know it was not a valid solution
 	if (checkSudoku()>=1)
 	{
 		printf("Sudoku Solution is invalid \n"); 
@@ -202,6 +204,7 @@ int main(int argc, char const *argv[])
 	else
 	{
 		printf("Sudoku Solution is valid \n"); 
+		//outputs file here
 		FILE *FILE2;
 
         FILE2= fopen("solution.txt","w+"); //open of create file named solution.txt
@@ -216,33 +219,10 @@ int main(int argc, char const *argv[])
 			}
 			fprintf(FILE2,"\n");
         }
+		//closes file from output
 		fclose(FILE2);
 		printf("Solution printed to solution.txt\n");
 	}
-	
-	
-
-	
-
-	// if (pthread_create(&th, NULL, &checkThreadSquare, test)!=0){
-	// 	perror("thread creation failed");
-	// } else{
-	// 	printf("I have created the thread\n");
-	// }
-
-	// if (pthread_join(th, (void**) &res)!=0){
-	// 	perror("thread join failed");
-	// }
-
-	/*
-	if(solve(sudokuArray2)){
-		print(sudokuArray2);
-	}
-	if(checkSudoku(sudokuArray2)==1){
-		printf("Sudoku has been succesfully solved");
-	};
-	*/
-	//printf("Result: %d\n", resultMaster);
 }
 int checkSudoku ()
 {
@@ -274,21 +254,21 @@ int checkSudoku ()
 	if (pthread_join(thy, (void**) &res)!=0){
 		perror("thread join failed");
 	}
+	//sums res* (the return value) to returnVal
 	returnVal += *res;
 	if (pthread_join(thx, (void**) &res)!=0){
 		perror("thread join failed");
 	}
-
+	returnVal += *res;
 	for (int i = 0; i < 9; i++)
 	{
 		if (pthread_join(th[i], (void**) &res)!=0){
 			perror("thread join failed");
 		};
+		//sums res* (the return value) to returnVal
 		returnVal += *res;
 	}
-
-	returnVal += *res;
-
+	//returns returnVal, if the number is greater than 0 then the solution is invalid
 	return returnVal;
 }
 
