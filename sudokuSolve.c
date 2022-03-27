@@ -159,13 +159,13 @@ void *checkThreadSquare(void *args)
 		//if any column does not equal 45 the result int will get switched to 1 and return 1
 		{
 			*result = 1;
-		}	
-	}
+		}
 	//returns the result casted as a void pointer
 	//frees the argument (we allocated memory for it in the loop)
 	free(args);
 	return ((void *) result);
 }
+
 int main(int argc, char const *argv[])
 {
 	//opening file code
