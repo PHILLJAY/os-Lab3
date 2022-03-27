@@ -87,7 +87,6 @@ void print(int arr[9][9])
 void *checkThreadY(void *args)
 {
 	//debugging code
-	printf("I am the Y checker thread\n \n");
 	//allocates an int for returning
 	int *result = malloc(sizeof(int));
 	*result = 0;
@@ -97,11 +96,11 @@ void *checkThreadY(void *args)
 		int temp = 0;
 		for (int y = 0; y<9; y++)
 		{
-			printf("%d\n", puzzle[y][x]);
+			//printf("%d\n", puzzle[y][x]);
 			temp += puzzle[y][x];
 		}
 		//debugging code ignore
-		printf("Temp value is:\n %d \n ", temp);
+		//printf("Temp value is:\n %d \n ", temp);
 		if (temp != 45)
 		{
 			*result = 1;
@@ -113,7 +112,6 @@ void *checkThreadY(void *args)
 void *checkThreadX(void *args)
 {
 	//debugging code
-	printf("I am the Y checker thread\n \n");
 	//allocates an int for returning
 	int *result = malloc(sizeof(int));
 	*result = 0;
@@ -123,11 +121,11 @@ void *checkThreadX(void *args)
 		int temp = 0;
 		for (int x = 0; x<9; x++)
 		{
-			printf("%d\n", puzzle[y][x]);
+			//printf("%d\n", puzzle[y][x]);
 			temp += puzzle[y][x];
 		}
 		//debugging code ignore
-		printf("Temp value is:\n %d \n ", temp);
+		//printf("Temp value is:\n %d \n ", temp);
 		if (temp != 45)
 		{
 			*result = 1;
@@ -145,17 +143,12 @@ void *checkThreadSquare(void *args)
 	int x1 = 0;
 	int y1 = 0;
 	x1 = ((int)floor(index / 3)) * 3;
-	printf("Your x1 value is: %d\n", x1);
+	//printf("Your x1 value is: %d\n", x1);
 	y1 = (index % 3) * 3;
-	printf("Your y1 value is: %d\n", y1);
-	/*
-	get x from #
-		/3 then floor
-	get y from #
-		%3
-	*/
-	printf("I am the Square checker thread\n");
-	printf("The index you passed to me is: %d\n", index);
+	//printf("Your y1 value is: %d\n", y1);
+
+	//printf("I am the Square checker thread\n");
+	//printf("The index you passed to me is: %d\n", index);
 	int temp = 0;
 	for (int x = 0; x < 3; x++)
 	{
@@ -165,7 +158,7 @@ void *checkThreadSquare(void *args)
 			temp += puzzle[y+y1][x+x1];
 		}
 	}
-	printf("Your temp value is %d\n", temp);
+	//printf("Your temp value is %d\n", temp);
 	if (temp!=45)
 	{
 		*result = 1;
@@ -277,7 +270,7 @@ int checkSudoku ()
 	//coor squares[9];
 	pthread_t thy;
 	pthread_t thx;
-	pthread_t th[10];
+	pthread_t th[9];
 
 
 	//creates one instance of the x and y threads
@@ -289,13 +282,14 @@ int checkSudoku ()
 	}
 	//loops and creates 9 squareChecker threads
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		int *a = malloc(sizeof(int));
 		*a = i;
 		if (pthread_create(&th[i], NULL,checkThreadSquare, a));
 	}
-	
+	printf("\n")
+	printf("Joining Threads now\n");
 	//joins x and y threads
 	if (pthread_join(thy, (void**) &res)!=0){
 		perror("thread join failed");
@@ -304,7 +298,9 @@ int checkSudoku ()
 	if (pthread_join(thx, (void**) &res)!=0){
 		perror("thread join failed");
 	}
-	for (int i = 0; i < 10; i++)
+	printf("\n")
+	printf("Joining square Threads now\n");
+	for (int i = 0; i < 9; i++)
 	{
 		if (pthread_join(&th[i], (void**) &res)!=0){
 			perror("thread join failed");
