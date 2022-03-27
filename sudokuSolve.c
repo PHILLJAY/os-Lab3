@@ -154,7 +154,7 @@ void *checkThreadSquare(void *args)
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			printf("%d \n", puzzle[y+y1][x+x1]);
+			//printf("%d \n", puzzle[y+y1][x+x1]);
 			temp += puzzle[y+y1][x+x1];
 		}
 	}
