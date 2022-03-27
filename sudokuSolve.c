@@ -288,7 +288,7 @@ int checkSudoku ()
 		*a = i;
 		if (pthread_create(&th[i], NULL,checkThreadSquare, a));
 	}
-	printf("\n")
+	printf("\n");
 	printf("Joining Threads now\n");
 	//joins x and y threads
 	if (pthread_join(thy, (void**) &res)!=0){
@@ -298,7 +298,7 @@ int checkSudoku ()
 	if (pthread_join(thx, (void**) &res)!=0){
 		perror("thread join failed");
 	}
-	printf("\n")
+	printf("\n");
 	printf("Joining square Threads now\n");
 	for (int i = 0; i < 9; i++)
 	{
