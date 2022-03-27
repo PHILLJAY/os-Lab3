@@ -55,7 +55,7 @@ int valid(int sudoku[9][9], int row, int column, int guess)
   	return 1;
 }
 
-int solve(int sudoku[9][9])g
+int solve(int sudoku[9][9])
 {
 	int row;
 	int column;	
