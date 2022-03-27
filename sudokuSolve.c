@@ -4,7 +4,7 @@
 #include <math.h>
 
 int puzzle[9][9]={
-		{6, 3, 4, 6, 7, 8, 9, 1, 2},
+		{5, 3, 4, 6, 7, 8, 9, 1, 2},
 		{6, 7, 2, 1, 9, 5, 3, 4, 8},
 		{1, 9, 8, 3, 4, 2, 5, 6, 7},
 		{8, 5, 9, 7, 6, 1, 4, 2, 3},
@@ -24,13 +24,13 @@ int find_empty_cell(int[9][9], int *, int *);
 
 
 //find next empty cell
-int find_empty_cell(int puzzle[9][9], int *row, int *column) 
+int find_empty_cell(int sudoku[9][9], int *row, int *column) 
 {
 	for (int x = 0; x < 9; x++)
 	{
 		for (int y = 0; y < 9; y++)
 		{
-			if (!puzzle[x][y])
+			if (!sudoku[x][y])
 			{
         	*row = x;
         	*column = y;
@@ -41,32 +41,32 @@ int find_empty_cell(int puzzle[9][9], int *row, int *column)
   return 0;
 }
 
-int valid(int puzzle[9][9], int row, int column, int guess)
+int valid(int sudoku[9][9], int row, int column, int guess)
 {
 	int corner_x = row / 3 * 3;
 	int corner_y = column / 3 * 3;
 
 	for (int x = 0; x < 9; ++x) 
 	{
-		if (puzzle[row][x] == guess) return 0;
-		if (puzzle[x][column] == guess) return 0;
-    	if (puzzle[corner_x + (x % 3)][corner_y + (x / 3)] == guess) return 0;
+		if (sudoku[row][x] == guess) return 0;
+		if (sudoku[x][column] == guess) return 0;
+    	if (sudoku[corner_x + (x % 3)][corner_y + (x / 3)] == guess) return 0;
  	}
   	return 1;
 }
 
-int solve(int puzzle[9][9])
+int solve(int sudoku[9][9])
 {
 	int row;
 	int column;	
-	if(!find_empty_cell(puzzle, &row, &column)) return 1;	
+	if(!find_empty_cell(sudoku, &row, &column)) return 1;	
 	for (int guess = 1; guess < 10; guess++)
 	{
-		if (valid(puzzle, row, column, guess))
+		if (valid(sudoku, row, column, guess))
 		{
-			puzzle[row][column] = guess;	
-			if(solve(puzzle)) return 1;
-			puzzle[row][column] = 0;
+			sudoku[row][column] = guess;	
+			if(solve(sudoku)) return 1;
+			sudoku[row][column] = 0;
 		}
 	}
   return 0;
