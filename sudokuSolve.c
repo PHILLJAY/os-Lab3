@@ -302,7 +302,7 @@ int checkSudoku ()
 	printf("Joining square Threads now\n");
 	for (int i = 0; i < 9; i++)
 	{
-		if (pthread_join(&th[i], (void**) &res)!=0){
+		if (pthread_join(th[i], (void**) &res)!=0){
 			perror("thread join failed");
 		};
 		returnVal += *res;
